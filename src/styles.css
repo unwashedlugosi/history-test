@@ -216,7 +216,8 @@ body {
   background: var(--papyrus);
   border: none;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 12px 14px;
+  min-height: 44px;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--brown);
@@ -245,7 +246,8 @@ body {
   background: var(--papyrus);
   border: 2px solid transparent;
   border-radius: 8px;
-  padding: 8px 14px;
+  padding: 10px 14px;
+  min-height: 44px;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--brown);
@@ -942,8 +944,10 @@ body {
 }
 
 .toggle-label input {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
+  min-width: 44px;
+  min-height: 44px;
   accent-color: var(--blue);
 }
 
