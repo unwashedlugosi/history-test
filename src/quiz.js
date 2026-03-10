@@ -1,5 +1,5 @@
-import { QUESTIONS, LESSONS } from './content.js';
-import { addXP, recordAnswer, getQuestionRecord, getProgress } from './progress.js';
+import { QUESTIONS, LESSONS, STREAK_MESSAGES } from './content.js';
+import { addXP, recordAnswer, getQuestionRecord, getProgress, getLevel } from './progress.js';
 
 // Fuzzy match — this isn't a spelling test!
 // Allows up to ~30% character errors (Levenshtein distance)
@@ -32,6 +32,9 @@ export function renderQuiz(app) {
   let selectedAnswer = null;
   let sessionCorrect = 0;
   let sessionTotal = 0;
+  let sessionXP = 0;
+  let streak = 0;
+  let lastStreakMessage = '';
   // For sequence questions
   let dragOrder = [];
 
@@ -60,6 +63,9 @@ export function renderQuiz(app) {
     currentIdx = 0;
     sessionCorrect = 0;
     sessionTotal = 0;
+    sessionXP = 0;
+    streak = 0;
+    lastStreakMessage = '';
     answered = false;
     selectedAnswer = null;
   }
@@ -95,8 +101,10 @@ export function renderQuiz(app) {
       </div>
       <div class="quiz-meta">
         <span>Question ${currentIdx + 1} of ${queue.length}</span>
+        ${streak >= 3 ? `<span class="streak-badge">${streak} in a row</span>` : ''}
         <span class="quiz-score">${sessionCorrect}/${sessionTotal} correct</span>
       </div>
+      ${lastStreakMessage ? `<div class="streak-message">${lastStreakMessage}</div>` : ''}
       <div class="quiz-card ${q.weak ? 'weak-card' : ''}">
         ${q.weak ? '<span class="weak-badge">Weak Spot</span>' : ''}
         <span class="question-type-badge">${typeLabel(q.type)}</span>
@@ -313,15 +321,66 @@ export function renderQuiz(app) {
     sessionTotal++;
     if (correct) {
       sessionCorrect++;
-      addXP(q.type);
+      streak++;
+      const rec = getQuestionRecord(qKey(q));
+      const firstTry = !rec || rec.attempts === 0;
+      const result = addXP(q.type, firstTry);
+      sessionXP += result.earned;
+      // Check for streak message
+      const streakKeys = Object.keys(STREAK_MESSAGES).map(Number).sort((a, b) => a - b);
+      for (const k of streakKeys) {
+        if (streak >= k) lastStreakMessage = STREAK_MESSAGES[k];
+      }
+      recordAnswer(qKey(q), correct);
+      render();
+      // Show XP popup
+      showXPPopup(result.earned, firstTry);
+      // Show level-up if applicable
+      if (result.leveledUp) {
+        setTimeout(() => showLevelUp(result.newLevel), 400);
+      }
+    } else {
+      streak = 0;
+      lastStreakMessage = '';
+      recordAnswer(qKey(q), correct);
+      render();
     }
-    recordAnswer(qKey(q), correct);
-    render();
+  }
+
+  function showXPPopup(earned, firstTry) {
+    const popup = document.createElement('div');
+    popup.className = 'xp-popup';
+    popup.textContent = `+${earned} XP${firstTry ? ' (first try!)' : ''}`;
+    document.body.appendChild(popup);
+    setTimeout(() => popup.remove(), 1200);
+  }
+
+  function showLevelUp(newTitle) {
+    const icons = { Scribe: '\u270D\uFE0F', Apprentice: '\uD83D\uDCDA', Scholar: '\uD83C\uDF93', Priest: '\u2626\uFE0F', Advisor: '\uD83D\uDCDC', Vizier: '\uD83D\uDC51', Commander: '\u2694\uFE0F', Pharaoh: '\uD83D\uDC52', 'Great Pharaoh': '\uD83C\uDFDB\uFE0F', 'Living God': '\uD83C\uDF1F' };
+    const overlay = document.createElement('div');
+    overlay.className = 'level-up-overlay';
+    overlay.innerHTML = `
+      <div class="level-up-card">
+        <div class="level-up-icon">${icons[newTitle] || '\uD83C\uDF1F'}</div>
+        <div class="level-up-title">LEVEL UP!</div>
+        <div class="level-up-name">${newTitle}</div>
+        <div class="level-up-sub">Keep going — you're building real knowledge.</div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.onclick = () => overlay.remove();
+    setTimeout(() => overlay.remove(), 3000);
   }
 
   function showResults() {
     const pct = sessionTotal > 0 ? Math.round((sessionCorrect / sessionTotal) * 100) : 0;
     const p = getProgress();
+    const level = getLevel();
+    const resultMessage = pct === 100 ? 'Perfect! You nailed every single one.'
+      : pct >= 90 ? 'Excellent — you really know this material.'
+      : pct >= 75 ? 'Solid work. A few topics to review, then you\'ll have it.'
+      : pct >= 50 ? 'Good start. Hit "Learn It" for the tricky ones, then come back.'
+      : 'No worries — use "Learn It" and "Know It" to build up, then try again.';
     app.innerHTML = `
       <div class="mode-header">
         <button class="back-btn" id="back-home">&larr; Home</button>
@@ -330,6 +389,9 @@ export function renderQuiz(app) {
       <div class="results-screen">
         <div class="results-score">${pct}%</div>
         <p>${sessionCorrect} out of ${sessionTotal} correct</p>
+        <div class="session-xp-earned">+${sessionXP} XP this session</div>
+        <div class="session-level">${level.title} — ${level.currentXP} XP total${level.nextTitle ? ` (${level.nextXP - level.currentXP} to ${level.nextTitle})` : ''}</div>
+        <p class="results-message">${resultMessage}</p>
         <div class="mastery-bars">
           ${LESSONS.map(l => `
             <div class="mastery-row">

@@ -1,5 +1,5 @@
 import { QUESTIONS, LESSONS } from './content.js';
-import { addXP, recordAnswer, recordPracticeTest, getProgress } from './progress.js';
+import { addXP, recordAnswer, recordPracticeTest, getProgress, getLevel } from './progress.js';
 
 // Fuzzy match — this isn't a spelling test!
 function fuzzyMatch(input, target) {
@@ -330,7 +330,11 @@ export function renderPracticeTest(app) {
   function handleAnswer(q, correct) {
     answered = true;
     answers.push({ question: q, correct });
-    if (correct) addXP(q.type);
+    if (correct) {
+      const rec = getProgress().answeredQuestions[qKey(q)];
+      const firstTry = !rec || rec.attempts === 0;
+      addXP(q.type, firstTry);
+    }
     recordAnswer(qKey(q), correct);
     renderQuestion();
   }

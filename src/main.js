@@ -85,7 +85,18 @@ function renderHome() {
 }
 
 function levelIcon(title) {
-  const icons = { Scribe: '&#9997;', Priest: '&#9764;', Vizier: '&#128081;', Pharaoh: '&#128082;', 'Living God': '&#127775;' };
+  const icons = {
+    Scribe: '&#9997;',
+    Apprentice: '&#128218;',
+    Scholar: '&#127891;',
+    Priest: '&#9764;',
+    Advisor: '&#128220;',
+    Vizier: '&#128081;',
+    Commander: '&#9876;',
+    Pharaoh: '&#128082;',
+    'Great Pharaoh': '&#127963;',
+    'Living God': '&#127775;'
+  };
   return icons[title] || '&#9997;';
 }
 

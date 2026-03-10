@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { XP_VALUES, LEVELS } from './content.js';
+import { XP_VALUES, LEVELS, FIRST_TRY_BONUS } from './content.js';
 
 const SUPABASE_URL = 'https://dhwllgdxpeucldtmzhme.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRod2xsZ2R4cGV1Y2xkdG16aG1lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMzI2NTMsImV4cCI6MjA4NTgwODY1M30.PmDxpoWXP0zA2sJLgRxAfODH1JcjdFOoRMdnGZwJYLE';
@@ -34,11 +34,15 @@ function save() {
   syncToSupabase();
 }
 
-export function addXP(questionType) {
+export function addXP(questionType, firstTry = false) {
   const p = getProgress();
-  p.xp += XP_VALUES[questionType] || 10;
+  const oldLevel = getLevel();
+  let earned = XP_VALUES[questionType] || 10;
+  if (firstTry) earned += FIRST_TRY_BONUS;
+  p.xp += earned;
   save();
-  return p.xp;
+  const newLevel = getLevel();
+  return { totalXP: p.xp, earned, leveledUp: newLevel.title !== oldLevel.title, newLevel: newLevel.title };
 }
 
 export function recordAnswer(questionKey, correct) {

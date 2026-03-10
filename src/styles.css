@@ -983,6 +983,135 @@ body {
   width: 100%;
 }
 
+/* ===== XP POPUP ===== */
+.xp-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--gold-bright);
+  color: var(--brown-dark);
+  font-weight: 800;
+  font-size: 1.2rem;
+  padding: 8px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.5);
+  z-index: 1000;
+  pointer-events: none;
+  animation: xpFloat 1.2s ease-out forwards;
+}
+
+@keyframes xpFloat {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -80%) scale(1.1); }
+  100% { opacity: 0; transform: translate(-50%, -120%) scale(0.9); }
+}
+
+/* ===== LEVEL UP OVERLAY ===== */
+.level-up-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+
+.level-up-card {
+  background: var(--papyrus);
+  border-radius: 20px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), 0 0 60px rgba(201, 168, 76, 0.3);
+  animation: levelPop 0.4s ease;
+  max-width: 320px;
+}
+
+.level-up-icon {
+  font-size: 4rem;
+  margin-bottom: 12px;
+}
+
+.level-up-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.level-up-name {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--brown-dark);
+  margin-bottom: 12px;
+}
+
+.level-up-sub {
+  font-size: 0.9rem;
+  color: var(--brown);
+  line-height: 1.4;
+}
+
+@keyframes levelPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===== STREAK ===== */
+.streak-badge {
+  background: var(--gold-bright);
+  color: var(--brown-dark);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.streak-message {
+  background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+  color: var(--brown-dark);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 8px 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* ===== SESSION RESULTS ===== */
+.session-xp-earned {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--gold);
+  margin: 8px 0 4px;
+}
+
+.session-level {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: 12px;
+}
+
+.results-message {
+  font-size: 0.95rem;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 380px) {
   #app { padding: 12px; }

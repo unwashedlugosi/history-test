@@ -671,8 +671,26 @@ export const XP_VALUES = {
 
 export const LEVELS = [
   { title: 'Scribe', minXP: 0 },
-  { title: 'Priest', minXP: 100 },
-  { title: 'Vizier', minXP: 300 },
-  { title: 'Pharaoh', minXP: 600 },
-  { title: 'Living God', minXP: 1000 }
+  { title: 'Apprentice', minXP: 50 },
+  { title: 'Scholar', minXP: 120 },
+  { title: 'Priest', minXP: 200 },
+  { title: 'Advisor', minXP: 300 },
+  { title: 'Vizier', minXP: 420 },
+  { title: 'Commander', minXP: 560 },
+  { title: 'Pharaoh', minXP: 720 },
+  { title: 'Great Pharaoh', minXP: 900 },
+  { title: 'Living God', minXP: 1100 }
 ];
+
+// Bonus XP for getting it right on the first try (rewards careful thinking)
+export const FIRST_TRY_BONUS = 5;
+
+// Streak messages — all praise knowledge/mastery, never speed
+export const STREAK_MESSAGES = {
+  3: 'Nice streak! You know your stuff.',
+  5: 'Five in a row! This material is clicking.',
+  7: 'Seven straight! You\'ve really been studying.',
+  10: 'TEN correct! You\'re locked in.',
+  15: 'Fifteen! Pharaoh-level knowledge.',
+  20: 'TWENTY! You own this material.'
+};
