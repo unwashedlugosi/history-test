@@ -1,5 +1,6 @@
 import { QUESTIONS, LESSONS, STREAK_MESSAGES } from './content.js';
 import { addXP, recordAnswer, getQuestionRecord, getProgress, getLevel } from './progress.js';
+import { launchSpaceInvaders } from './space-invaders.js';
 
 // Fuzzy match — this isn't a spelling test!
 // Allows up to ~30% character errors (Levenshtein distance)
@@ -35,6 +36,7 @@ export function renderQuiz(app) {
   let sessionXP = 0;
   let streak = 0;
   let lastStreakMessage = '';
+  let spaceInvadersPlayed = false;
   // For sequence questions
   let dragOrder = [];
 
@@ -101,10 +103,15 @@ export function renderQuiz(app) {
       </div>
       <div class="quiz-meta">
         <span>Question ${currentIdx + 1} of ${queue.length}</span>
-        ${streak >= 3 ? `<span class="streak-badge">${streak} in a row</span>` : ''}
         <span class="quiz-score">${sessionCorrect}/${sessionTotal} correct</span>
       </div>
-      ${lastStreakMessage ? `<div class="streak-message">${lastStreakMessage}</div>` : ''}
+      ${streak >= 2 ? `
+        <div class="streak-fire ${streak >= 15 ? 'streak-inferno' : streak >= 10 ? 'streak-blaze' : streak >= 7 ? 'streak-hot' : streak >= 5 ? 'streak-warm' : ''}">
+          <span class="streak-flames">${streak >= 15 ? '\uD83D\uDD25\uD83D\uDD25\uD83D\uDD25' : streak >= 10 ? '\uD83D\uDD25\uD83D\uDD25' : streak >= 5 ? '\uD83D\uDD25' : '\u2728'}</span>
+          <span class="streak-count">${streak} in a row</span>
+          ${lastStreakMessage ? `<span class="streak-msg">${lastStreakMessage}</span>` : ''}
+        </div>
+      ` : ''}
       <div class="quiz-card ${q.weak ? 'weak-card' : ''}">
         ${q.weak ? '<span class="weak-badge">Weak Spot</span>' : ''}
         <span class="question-type-badge">${typeLabel(q.type)}</span>
@@ -338,6 +345,11 @@ export function renderQuiz(app) {
       // Show level-up if applicable
       if (result.leveledUp) {
         setTimeout(() => showLevelUp(result.newLevel), 400);
+      }
+      // Space Invaders at 20 streak (once per session)
+      if (streak >= 20 && !spaceInvadersPlayed) {
+        spaceInvadersPlayed = true;
+        setTimeout(() => launchSpaceInvaders(), 800);
       }
     } else {
       streak = 0;
