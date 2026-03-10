@@ -58,7 +58,7 @@ export const STUDY_GUIDE = {
     {
       topic: 'Egyptian Religion',
       facts: [
-        'Egyptians were **polytheistic** — they believed in many gods.',
+        'Egyptians believed in **many gods**.',
         '**Amon-Re** (also spelled Amon-Ra), **Isis**, and **Horus** were the names of important Egyptian gods.',
         'The gods could be kind or dangerous — they controlled everything from flooding of the Nile to the death of a child.',
         'To please the gods, people built **temples** and offered prayers and gifts.',
@@ -137,10 +137,10 @@ export const STUDY_GUIDE = {
       topic: 'How Did Kush Develop?',
       facts: [
         'Kush\'s location helped its civilization grow because it was right **next to the Nile River**.',
-        'Kush was located south of Egypt, near the Nile, in what is now Sudan.',
+        'Kush was located south of Egypt, near the Nile.',
         'Kush was rich in valuable resources: **gold, ivory, and ebony**.',
         'The Nile helped Kush just like it helped Egypt — providing water, fertile land, and a trade route.',
-        'Kush developed its own culture but was heavily influenced by Egypt.'
+        'Kush developed its own culture but was influenced by Egypt.'
       ]
     },
     {
@@ -156,12 +156,10 @@ export const STUDY_GUIDE = {
     {
       topic: 'What Were Kush\'s Accomplishments?',
       facts: [
-        'Kush developed its own writing system called **Meroitic** script — different from Egyptian hieroglyphics.',
-        'Kush\'s economy was based on **iron** — they became skilled ironworkers and traded iron goods.',
+        'Kush developed its own **writing system** — different from Egyptian hieroglyphics.',
+        'Kush had its own **economy** based on trade and resources.',
         'Kush had its own **government** that was independent from Egypt.',
-        'The Kush capital was eventually moved to **Meroe** (pronounced "MER-oh-ee").',
-        'Meroe became a major center for iron production — sometimes called the "Pittsburgh of Africa."',
-        'Three key Kush accomplishments: their own **writing system** (Meroitic), an **iron-based economy**, and their own **government**.'
+        'Three key Kush accomplishments: their own **writing system**, their own **economy**, and their own **government**.'
       ]
     }
   ]
@@ -180,14 +178,13 @@ export const FLASHCARDS = [
   { term: 'Narmer', definition: 'The legendary first king to unite Upper and Lower Egypt ("the Two Lands") into one kingdom. Also called Menes.', lesson: 1 },
   { term: 'Pharaoh', definition: 'The king of Egypt, considered a god on earth. At the top of the social pyramid. No one dared disobey the pharaoh.', lesson: 1 },
   { term: 'Irrigation', definition: 'A system for watering crops. Middle Kingdom pharaohs used irrigation to deal with the threat of flooding.', lesson: 1 },
-  { term: 'Polytheistic', definition: 'Believing in many gods. Egyptians were polytheistic — they worshipped Amon-Re, Isis, Horus, and many others.', lesson: 1 },
+  { term: 'Many Gods', definition: 'Egyptians believed in many gods — they worshipped Amon-Re, Isis, Horus, and many others.', lesson: 1 },
   { term: 'Amon-Re, Isis, Horus', definition: 'The names of important Egyptian gods. Amon-Re was the sun god. (Max — you missed this on the quiz! They are NOT Greek gods.)', lesson: 1, weak: true },
   { term: 'Mummies', definition: 'Preserved bodies of the dead. Egyptians made mummies because they believed in an afterlife and wanted to preserve the body.', lesson: 1 },
   { term: 'Afterlife', definition: 'Life after death. Egyptians believed the dead would need their preserved body in the next world.', lesson: 1 },
   { term: 'Hatshepsut', definition: 'A famous female pharaoh (pronounced "hat SHEP soot") who ruled Egypt for more than 20 years.', lesson: 1 },
   { term: 'Thutmose III', definition: 'An Egyptian pharaoh famous for his military conquests. He conquered the kingdom of Kush.', lesson: 1 },
   { term: 'Ramses II', definition: 'The Egyptian pharaoh who built the most monuments. One of Egypt\'s most famous rulers.', lesson: 1 },
-  { term: 'Dynasty', definition: 'A series of rulers from the same family. Egypt was ruled by many different dynasties over thousands of years.', lesson: 1 },
   // Lesson 2
   { term: 'Hieroglyphics', definition: 'The Egyptian writing system using symbols (drawings) that represent words and sounds. NOT alphabetic letters — they are drawings or symbols.', lesson: 2 },
   { term: 'Papyrus', definition: 'A paper-like material invented by Egyptians. It was the first kind of paper — easy to write on, lasted a long time, and was lightweight for travel.', lesson: 2 },
@@ -199,11 +196,9 @@ export const FLASHCARDS = [
   { term: 'Anatomy', definition: 'The study of the body and its organs. Egyptians had advanced knowledge of anatomy, which helped them develop medicine and surgery.', lesson: 2 },
   // Lesson 3
   { term: 'Interdependence', definition: 'When two countries trade with and rely on each other. Egypt and Kush were interdependent — each had resources the other wanted.', lesson: 3, weak: true },
-  { term: 'Kush', definition: 'An ancient kingdom south of Egypt, near the Nile River (in modern-day Sudan). Rich in gold, ivory, and ebony.', lesson: 3, weak: true },
+  { term: 'Kush', definition: 'An ancient kingdom south of Egypt, near the Nile River. Rich in gold, ivory, and ebony.', lesson: 3, weak: true },
   { term: 'Piye', definition: 'A Kushite king who conquered Egypt when Egyptian power weakened. He named himself pharaoh and ruled both lands.', lesson: 3, weak: true },
-  { term: 'Meroe', definition: 'The capital of Kush after it moved from Napata. Became a major center for iron production — sometimes called "the Pittsburgh of Africa."', lesson: 3, weak: true },
-  { term: 'Meroitic Script', definition: 'Kush\'s own writing system, different from Egyptian hieroglyphics. One of Kush\'s three major accomplishments.', lesson: 3, weak: true },
-  { term: 'Iron', definition: 'The basis of Kush\'s economy. Kush became skilled ironworkers and traded iron goods with other civilizations.', lesson: 3, weak: true },
+  { term: 'Kush\'s Accomplishments', definition: 'Kush had three major accomplishments: their own writing system, their own economy, and their own government — all independent from Egypt.', lesson: 3, weak: true },
 ];
 
 // ============================================================
@@ -378,7 +373,7 @@ export const QUESTIONS = [
     choices: ['West of Egypt along the coast', 'South of Egypt near the Nile River', 'North of Egypt in the Mediterranean', 'East of Egypt in the desert'],
     answer: 1,
     weak: true,
-    explanation: 'Kush was located south of Egypt, near the Nile River (in modern-day Sudan).'
+    explanation: 'Kush was located south of Egypt, near the Nile River.'
   },
   {
     type: 'mc',
@@ -403,22 +398,12 @@ export const QUESTIONS = [
   {
     type: 'mc',
     lesson: 3,
-    topic: 'Kush economy',
-    question: 'What was the basis of Kush\'s economy?',
-    choices: ['Gold mining', 'Iron production', 'Papyrus trade', 'Farming wheat'],
+    topic: 'Kush accomplishments',
+    question: 'What were Kush\'s three major accomplishments?',
+    choices: ['Pyramids, mummies, and hieroglyphics', 'Their own writing system, economy, and government', 'Calendars, glass, and medicine', 'Temples, sculptures, and papyrus'],
     answer: 1,
     weak: true,
-    explanation: 'Kush\'s economy was based on iron — they were skilled ironworkers.'
-  },
-  {
-    type: 'mc',
-    lesson: 3,
-    topic: 'Meroe',
-    question: 'Why was Meroe important to the kingdom of Kush?',
-    choices: ['It was where the pyramids were built', 'It was the capital and a major iron production center', 'It was a religious temple', 'It was where hieroglyphics were invented'],
-    answer: 1,
-    weak: true,
-    explanation: 'Meroe was Kush\'s capital and a major center for iron production.'
+    explanation: 'Kush\'s three accomplishments: their own writing system, economy, and government.'
   },
   {
     type: 'mc',
@@ -509,29 +494,11 @@ export const QUESTIONS = [
   {
     type: 'fill',
     lesson: 3,
-    topic: 'Meroe',
-    question: 'The capital of Kush was moved to ___.',
-    answer: ['meroe'],
-    weak: true,
-    explanation: 'Kush moved its capital to Meroe, which became a center for iron production.'
-  },
-  {
-    type: 'fill',
-    lesson: 3,
     topic: 'Piye',
     question: 'The Kushite king ___ conquered Egypt and named himself pharaoh.',
     answer: ['piye'],
     weak: true,
     explanation: 'Piye conquered Egypt when Egyptian power weakened.'
-  },
-  {
-    type: 'fill',
-    lesson: 3,
-    topic: 'Meroitic',
-    question: 'Kush developed their own writing system called ___ script.',
-    answer: ['meroitic'],
-    weak: true,
-    explanation: 'Meroitic script was Kush\'s own writing system, different from hieroglyphics.'
   },
   {
     type: 'fill',

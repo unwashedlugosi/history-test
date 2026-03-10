@@ -1,6 +1,27 @@
 import { QUESTIONS, LESSONS } from './content.js';
 import { addXP, recordAnswer, recordPracticeTest, getProgress } from './progress.js';
 
+// Fuzzy match — this isn't a spelling test!
+function fuzzyMatch(input, target) {
+  const a = input.toLowerCase().trim();
+  const b = target.toLowerCase().trim();
+  if (a === b) return true;
+  if (a.includes(b) || b.includes(a)) return true;
+  const matrix = Array.from({ length: a.length + 1 }, (_, i) =>
+    Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
+  );
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      matrix[i][j] = a[i - 1] === b[j - 1]
+        ? matrix[i - 1][j - 1]
+        : 1 + Math.min(matrix[i - 1][j], matrix[i][j - 1], matrix[i - 1][j - 1]);
+    }
+  }
+  const dist = matrix[a.length][b.length];
+  const maxLen = Math.max(a.length, b.length);
+  return dist <= Math.max(1, Math.floor(maxLen * 0.3));
+}
+
 export function renderPracticeTest(app) {
   let testQuestions = [];
   let currentIdx = 0;
@@ -254,10 +275,10 @@ export function renderPracticeTest(app) {
         if (!val) return;
         let correct = false;
         if (q.type === 'fill') {
-          correct = q.answer.some(a => val === a.toLowerCase());
+          correct = q.answer.some(a => fuzzyMatch(val, a));
         } else if (q.type === 'who-am-i') {
-          const valid = [q.answer.toLowerCase(), ...(q.acceptAlso || []).map(a => a.toLowerCase())];
-          correct = valid.some(a => val === a || val.includes(a));
+          const valid = [q.answer, ...(q.acceptAlso || [])];
+          correct = valid.some(a => fuzzyMatch(val, a));
         }
         selectedAnswer = correct;
         handleAnswer(q, correct);
