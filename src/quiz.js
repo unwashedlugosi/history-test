@@ -37,6 +37,7 @@ export function renderQuiz(app) {
   let streak = 0;
   let lastStreakMessage = '';
   let spaceInvadersPlayed = false;
+  let freebieGiven = false;
   // For sequence questions
   let dragOrder = [];
 
@@ -78,6 +79,15 @@ export function renderQuiz(app) {
 
   function render() {
     if (queue.length === 0) buildQueue();
+    // One free Space Invaders on first entering Prove It
+    if (!freebieGiven) {
+      freebieGiven = true;
+      if (!localStorage.getItem('history-si-freebie')) {
+        localStorage.setItem('history-si-freebie', '1');
+        launchSpaceInvaders();
+        return;
+      }
+    }
     if (currentIdx >= queue.length) {
       showResults();
       return;
@@ -346,7 +356,7 @@ export function renderQuiz(app) {
       if (result.leveledUp) {
         setTimeout(() => showLevelUp(result.newLevel), 400);
       }
-      // Space Invaders at 20 streak (once per session)
+      // Space Invaders at 20 streak (once per session, after the freebie)
       if (streak >= 20 && !spaceInvadersPlayed) {
         spaceInvadersPlayed = true;
         setTimeout(() => launchSpaceInvaders(), 800);
